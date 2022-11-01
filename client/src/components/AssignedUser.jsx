@@ -2,33 +2,37 @@ import React from 'react'
 import Header from './DashboardComponent/Header'
 import SideBar from './DashboardComponent/SideBar'
 import { useEffect, useState } from 'react'
-import { getAgents } from '../service/api'
-import { Link } from 'react-router-dom'
+import { getUsers } from '../service/api'
+import { useParams } from 'react-router-dom'
+
 
 const defaultValue = {
     role: '',
     name: ''
 }
 
-const Agents = () => {
+const AssignedUser = () => {
+    const id = useParams();
+    console.log(id)
 
     const [users, setUsers] = useState([]);
     const [superUser, setSuperUser] = useState(defaultValue)
 
     useEffect(() => {
-        getAllAgents();
+        getAllUsers();
     }, []);
 
-    const getAllAgents = async () => {
-        const response = await getAgents();
-        // console.log(response);
-
+    const getAllUsers = async () => {
+        const response = await getUsers(id);
         console.log(response.data);
+
+        setSuperUser(response.data)
+        // console.log(response.data);
         
-        setUsers(response.data);
+        setUsers(response.data.assignedUser);
+        // console.log(users)
     }
 
-   
     return (
         <>
             <Header />
@@ -44,7 +48,7 @@ const Agents = () => {
                             <div className="container-fluid">
                                 <div className="row mb-2">
                                     <div className="col-sm-6">
-                                        <h1>Agents</h1>
+                                        <h1> {superUser.role}:- {superUser.name}</h1>
                                     </div>
                                     <div className="col-sm-6">
                                         <ol className="breadcrumb float-sm-right">
@@ -64,24 +68,19 @@ const Agents = () => {
                                     <div className="row">
                                         {
                                             users.map(user => (
-                                                // console.log(user.assignedUser.name), 
+                                                console.log(user.name), 
                                                 // setAssign(user.assignedUser),
-                                                <>
                                                 <div className="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
                                                     <div className="card bg-light d-flex flex-fill  border border-info">
-                                                        <div className="card-header text-muted border-bottom-0">
-                                                            Agent
-                                                        </div>
-                                                <Link to={'/assignedUsers/'+user.username} className='nav-link'>
+                                                        
                                                         <div className="card-body pt-0">
                                                             <div className="row">
                                                                 <div className="col-7">
                                                                     <h2 className="lead"><b>{user.name}</b></h2>
                                                                     <ul className="ml-4 mb-0 fa-ul text-muted">
+                                                                        <li className="small"><span className="fa-li"><i className="fas fa-lg fa-envelope" /></span> Name: {user.name} </li>
                                                                         <li className="small"><span className="fa-li"><i className="fas fa-lg fa-envelope" /></span> Username: {user.username}</li>
-                                                                        {/* <li className="small"><span className="fa-li"><i className="fas fa-lg fa-envelope" /></span> Customers: </li> */}
-                                                                        {/* {user.assignedUser.map(ass => (
-                                                                        <li className="small"><span className="fa-li"></span> {ass.name}</li>))} */}
+                                                                        
                                                                     </ul>
                                                                 </div>
                                                                 <div className="col-5 text-center">
@@ -90,10 +89,8 @@ const Agents = () => {
                                                             </div>
                                                         </div>
 
-                                                </Link>
                                                     </div>
                                                 </div>
-                                                </>
                                             ))}
                                     </div>
                                 </div>
@@ -110,4 +107,4 @@ const Agents = () => {
     )
 }
 
-export default Agents
+export default AssignedUser

@@ -1,33 +1,47 @@
-import mongoose from 'mongoose';
+import mongoose, { SchemaTypeOptions } from 'mongoose';
+const { Schema } = mongoose;
 
 // import autoIncrement from 'mongoose-auto-increment'
 
 const userSchema = mongoose.Schema({
-    name: String,
-    username: String,
-    email: String,
-    phone: String,
-    password: String,
-    houseNo: String,
-    streetName: String,
-    state: String,
-    city: String,
-    district: String,
-    pincode: String,
-    isAdmin: Boolean,
-    isAgent: Boolean,
-    isAcc: Boolean,
+    name: {
+        type: String,
+        // required: true,
+    },
+    username: {
+        type: String,
+        // unique: true,
+        // required: true
+    },
+    password: {
+        type: String,
+        // required: true
+    },
+    role: {
+        type: String,
+        // required: true
+    },
+    assignedUser: [{
+        type: Schema.Types.ObjectId,
+        ref: 'alluser'
+    }],
+    status: {
+        type: Boolean
+    },
+    createdDate: String,
+    modifiedDate: String,
     accessToken: String,
     refreshToken: String
 })
 
-const customerSchema = mongoose.Schema({
-    name: String,
-    email: String,
-    phone: String,
-    age: String,
-    gender: String
+const roleSchema = mongoose.Schema({
+    role: {
+        type: String,
+        // required: true
+    }
 })
+
+ 
 
 const LoanSchema = mongoose.Schema({
 
@@ -45,26 +59,10 @@ const ReceiptSchema = mongoose.Schema({
     duration: String
 })
 
-
-// const AccountantSchema = mongoose.Schema({
-
-//     name: String,
-//     username: String,
-//     email: String,
-//     phone: String,
-//     password: String
-// })
-
-// autoIncrement.initialize(mongoose.connection);
-// userSchema.plugin(autoIncrement.plugin, 'user');
-
-export const User = mongoose.model('user', userSchema)
-
-export const Customer = mongoose.model('customer', customerSchema)
-
 export const Loan = mongoose.model('loan', LoanSchema)
-
-// export const Accountant = mongoose.model('accountant', AccountantSchema)
 
 export const Receipt = mongoose.model('receipt', ReceiptSchema)
 
+export const User = mongoose.model('alluser', userSchema)
+
+export const Role = mongoose.model('role', roleSchema)

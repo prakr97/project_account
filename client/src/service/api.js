@@ -20,33 +20,30 @@ const URL = 'http://localhost:8000';
 //     }
 // );
 
-export const addAgent = async (data) => {
+export const addUserInfo = async (data) => {
     try {
-        return await axios.post(`${URL}/addAgent`, data)
+        return await axios.post(`${URL}/addUser`, data)
     } catch (error) {
-        console.log('Error while calling add Agent Api', error);
+        console.log('Error while calling add User info Api', error);
     }
 
 }
 
-export const addCustomer = async (data) => {
+export const addRole = async (data) => {
     try {
-        return await axios.post(`${URL}/addCustomer`, data)
+        return await axios.post(`${URL}/addRole`, data)
     } catch (error) {
-        console.log('Error while calling add Customer Api', error);
+        console.log('Error while calling add role Api', error);
     }
 
 }
 
-export const addAccountant = async (data) => {
-    try {
 
-        return await axios.post(`${URL}/addAccountant`, data)
-    } catch (error) {
-        console.log('Error while calling add accountant Api', error);
-    }
 
-}
+
+
+
+
 
 export const addLoan = async (data) => {
     try {
@@ -78,11 +75,29 @@ export const loginUser = async (data) => {
 
 }
 
+
+export const getAllRoles = async () => {
+    try {
+        return await axios.get(`${URL}/role`)
+    } catch (error) {
+        console.log('error while calling getAllRoles api', error)
+    }
+}
+
+export const getUsers = async (user) => {
+    try {
+        console.log(user)
+        return await axios.post(`${URL}/assignedUsers`, {user})
+    } catch (error) {
+        console.log('error while calling getUsers api', error)
+    }
+}
+
 export const getCustomers = async () => {
     try {
         return await axios.get(`${URL}/customers`)
     } catch (error) {
-        console.log('error while calling getUsers api', error)
+        console.log('error while calling getCustomers api', error)
     }
 }
 
@@ -90,7 +105,7 @@ export const getAgents = async () => {
     try {
         return await axios.get(`${URL}/agents`)
     } catch (error) {
-        console.log('error while calling getUsers api', error)
+        console.log('error while calling getAgents api', error)
     }
 }
 
@@ -98,7 +113,7 @@ export const getAccountants = async () => {
     try {
         return await axios.get(`${URL}/accountants`)
     } catch (error) {
-        console.log('error while calling getUsers api', error)
+        console.log('error while calling getAccountants api', error)
     }
 }
 

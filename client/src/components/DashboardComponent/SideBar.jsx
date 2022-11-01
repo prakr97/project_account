@@ -41,23 +41,19 @@ export default function SideBar() {
                                 </a>
                                 <ul className="nav nav-treeview">
                                     <li className="nav-item">
-                                        <NavLink to='/addAgent' className="nav-link">
+                                        <NavLink to='/addUser' className="nav-link">
                                             <i className="far fa-circle nav-icon" />
-                                            <p>Add Agent</p>
+                                            <p>Add User</p>
                                         </NavLink>
                                     </li>
+
                                     <li className="nav-item">
-                                        <NavLink to='/addAccountant' className="nav-link">
+                                        <NavLink to='/addRole' className="nav-link">
                                             <i className="far fa-circle nav-icon" />
-                                            <p>Add Accountant</p>
+                                            <p>Add Role</p>
                                         </NavLink>
                                     </li>
-                                    <li className="nav-item">
-                                        <NavLink to='/addCustomer' className="nav-link">
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Add Customer</p>
-                                        </NavLink>
-                                    </li>
+                                    
                                     <li className="nav-item">
                                         <NavLink to='/addLoan' className="nav-link">
                                             <i className="far fa-circle nav-icon" />
@@ -71,17 +67,21 @@ export default function SideBar() {
                                         </NavLink>
                                     </li>
 
+                                    
 
                                 </ul>
                             </li>
 
 
+                           
+
                             <li className="nav-item">
-                                <NavLink to='/addUser' className="nav-link">
+                                <NavLink to='/role' className="nav-link">
                                     <i className="nav-icon fas fa-user-tie" />
-                                    <p>Users</p>
+                                    <p>Roles</p>
                                 </NavLink>
                             </li>
+
 
                             <li className="nav-item">
                                 <NavLink to='/agents' className="nav-link">

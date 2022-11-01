@@ -1,34 +1,40 @@
 // import { response } from 'express';
-import { User, Customer, Loan, Receipt } from '../schema/schema.js'
+import {   Loan, Receipt, User, Role} from '../schema/schema.js'
+
 // import { token } from '../schema/token.js'
 
 import { hash } from 'bcrypt';
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
 
-export const addAgent = async (request, response) => {
-    const agent = request.body;
+export const addUser = async (request, response) => {
+    const user = request.body;
     const securePassword = await hash(request.body.password, 10)
     request.body.password = securePassword
-    const newAgent = new User(agent);
+    const newUser = new User(user);
     try {
-        await newAgent.save()
-        response.status(200).json(newAgent);
+        await newUser.save()
+        response.status(200).json(newUser);
     } catch {
         response.status(400).json({ message: error.message })
     }
 }
 
-export const addCustomer = async (request, response) => {
-    const customer = request.body;
-    const newCustomer = new Customer(customer);
+
+export const addRole = async(request, response) => {
+    const role = request.body;
+    const newRole = new Role(role);
     try {
-        await newCustomer.save()
-        response.status(200).json(newCustomer);
+        await newRole.save()
+        response.status(200).json(newRole);
     } catch {
         response.status(400).json({ message: error.message })
     }
 }
+
+
+
+
 
 export const addLoan = async (request, response) => {
     const loan = request.body;
@@ -41,20 +47,7 @@ export const addLoan = async (request, response) => {
     }
 }
 
-export const addAccountant = async (request, response) => {
-    const accountant = request.body;
-    const securePassword = await hash(request.body.password, 10)
-    request.body.password = securePassword
 
-    const newAccountant = new User(accountant);
-
-    try {
-        await newAccountant.save()
-        response.status(200).json(newAccountant);
-    } catch {
-        response.status(400).json({ message: error.message })
-    }
-}
 
 export const addReceipt = async (request, response) => {
     const receipt = request.body;
@@ -82,9 +75,30 @@ const generateRefreshToken = (user) => {
 
 }
 
+
+export const role = async (request, response) => {
+    try {
+        const roles = await Role.find({});
+        response.status(200).json(roles);
+    } catch {
+        response.status(405).json({ message: error.message })
+    }
+}
+
+export const assignedUsers = async (request, response) => {
+    try {
+        console.log(request.body)
+        const users = await User.findOne( {username: request.body.user.id} )
+        .populate('assignedUser');
+        response.status(200).json(users);
+    } catch {
+        response.status(404).json({ message: error.message })
+    }
+}
+
 export const customers = async (request, response) => {
     try {
-        const users = await Customer.find({});
+        const users = await User.find({});
         response.status(200).json(users);
     } catch {
         response.status(404).json({ message: error.message })
@@ -93,7 +107,7 @@ export const customers = async (request, response) => {
 
 export const agents = async (request, response) => {
     try {
-        const users = await User.find({ isAgent: true });
+        const users = await User.find({ role: "agent" }).populate('assignedUser');
         response.status(200).json(users);
     } catch {
         response.status(404).json({ message: error.message })
