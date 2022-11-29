@@ -25,6 +25,9 @@ const userSchema = mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'alluser'
     }],
+    // assignTo: {
+    //     type: String,
+    // },
     status: {
         type: Boolean
     },
@@ -41,7 +44,7 @@ const roleSchema = mongoose.Schema({
     }
 })
 
- 
+
 
 const LoanSchema = mongoose.Schema({
 

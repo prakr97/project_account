@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { getAllRoles } from '../service/api'
 import Header from './DashboardComponent/Header'
 import SideBar from './DashboardComponent/SideBar'
+import { Link } from 'react-router-dom'
 
 const Roles = () => {
 
@@ -32,12 +33,12 @@ const Roles = () => {
                             <div className="container-fluid">
                                 <div className="row mb-2">
                                     <div className="col-sm-6">
-                                        <h1>Customers</h1>
+                                        <h1>Roles</h1>
                                     </div>
                                     <div className="col-sm-6">
                                         <ol className="breadcrumb float-sm-right">
                                             <li className="breadcrumb-item"><a href="#">Home</a></li>
-                                            <li className="breadcrumb-item active">Customers</li>
+                                            <li className="breadcrumb-item active">Roles</li>
                                         </ol>
                                     </div>
                                 </div>
@@ -56,7 +57,7 @@ const Roles = () => {
                                                 <th style={{ width: '20%' }}>
                                                     Role
                                                 </th>
-                                               
+
                                                 <th style={{ width: '20%' }}>
                                                 </th>
                                             </tr>
@@ -73,19 +74,17 @@ const Roles = () => {
                                                             </p>
 
                                                         </td>
-                                                        
+
 
                                                         <td className="project-actions text-right">
-                                                            <a className="btn btn-primary btn-sm mx-1" href="#">
-                                                                <i className="fas fa-folder mx-1">
-                                                                </i>
-                                                                View
-                                                            </a>
-                                                            <a className="btn btn-info btn-sm mx-1" href="#">
+
+                                                            <Link to={`/editRole/${user.role}`} className="btn btn-info btn-sm mx-1" >
                                                                 <i className="fas fa-pencil-alt mx-1">
                                                                 </i>
                                                                 Edit
-                                                            </a>
+                                                            </Link>
+                                                            {/* <Button variant='contained' style={{marginRight: 10}} component={Link} to={`/edit/${user._id}`}>Edit</Button> */}
+
                                                             <a className="btn btn-danger btn-sm" href="#">
                                                                 <i className="fas fa-trash mx-1">
                                                                 </i>

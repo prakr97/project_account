@@ -22,6 +22,7 @@ const URL = 'http://localhost:8000';
 
 export const addUserInfo = async (data) => {
     try {
+        console.log(data)
         return await axios.post(`${URL}/addUser`, data)
     } catch (error) {
         console.log('Error while calling add User info Api', error);
@@ -68,6 +69,7 @@ export const addReceipt = async (data) => {
 
 export const loginUser = async (data) => {
     try {
+        console.log('##hii')
         return await axios.post(`${URL}/login`, data)
     } catch (error) {
         console.log('Error while calling login user Api', error);
@@ -78,44 +80,102 @@ export const loginUser = async (data) => {
 
 export const getAllRoles = async () => {
     try {
-        return await axios.get(`${URL}/role`)
+        return await axios.get(`${URL}/roles`)
     } catch (error) {
         console.log('error while calling getAllRoles api', error)
     }
 }
 
-export const getUsers = async (user) => {
+export const getAssignedUsers = async (user) => {
     try {
         console.log(user)
-        return await axios.post(`${URL}/assignedUsers`, {user})
+        return await axios.post(`${URL}/assignedUsers`, { user })
     } catch (error) {
         console.log('error while calling getUsers api', error)
     }
 }
 
-export const getCustomers = async () => {
+// to get all users of specific category
+export const getUsers = async (user) => {
     try {
-        return await axios.get(`${URL}/customers`)
+        console.log(user)
+        return await axios.post(`${URL}/${user}`, { user })
     } catch (error) {
-        console.log('error while calling getCustomers api', error)
+        console.log('error while calling getUsers api', error)
     }
 }
 
-export const getAgents = async () => {
+// for 'addUserInfo' form to get all users list
+export const getUserList = async () => {
     try {
-        return await axios.get(`${URL}/agents`)
+
+        return await axios.get(`${URL}/userList`)
     } catch (error) {
-        console.log('error while calling getAgents api', error)
+        console.log('error while calling getUserList api', error)
     }
 }
 
-export const getAccountants = async () => {
+// to push in assignedUsers array for populate
+export const assigning = async (user, superUser) => {
     try {
-        return await axios.get(`${URL}/accountants`)
+        console.log(user, superUser)
+        return await axios.post(`${URL}/assigning`, { user, superUser })
     } catch (error) {
-        console.log('error while calling getAccountants api', error)
+        console.log('error while calling assigning api', error)
     }
 }
+
+export const getRole = async (role) => {
+    try {
+        return await axios.get(`${URL}/role/${role}`)
+    } catch (error) {
+        console.log('error while calling getRole api', error)
+    }
+}
+
+
+export const editRole = async (roleInfo, role) => {
+    try {
+        return await axios.post(`${URL}/role/${role}`, roleInfo)
+    } catch (error) {
+        console.log('error while calling editRole api', error)
+    }
+
+}
+
+export const getUser = async (user) => {
+    try {
+        return await axios.get(`${URL}/editUser/${user}`)
+    } catch (error) {
+        console.log('error while calling getUser api', error)
+    }
+}
+
+
+export const editUser = async (userInfo, user) => {
+    try {
+        return await axios.post(`${URL}/editUser/${user}`, userInfo)
+    } catch (error) {
+        console.log('error while calling editUser api', error)
+    }
+
+}
+
+export const deleteUser = async (id) => {
+    try {
+        return await axios.delete(`${URL}/${id}`)
+    } catch (error) {
+        console.log('error while calling deleteUser api', error)
+    }
+}
+// export const getAgents = async () => {
+//     try {
+//         return await axios.get(`${URL}/agents`)
+//     } catch (error) {
+//         console.log('error while calling getAgents api', error)
+//     }
+// }
+
 
 /*
 const refreshToken = async () => {

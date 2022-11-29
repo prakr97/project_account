@@ -1,5 +1,5 @@
 // import { response } from 'express';
-import {   Loan, Receipt, User, Role} from '../schema/schema.js'
+import { Loan, Receipt, User, Role } from '../schema/schema.js'
 
 // import { token } from '../schema/token.js'
 
@@ -21,7 +21,7 @@ export const addUser = async (request, response) => {
 }
 
 
-export const addRole = async(request, response) => {
+export const addRole = async (request, response) => {
     const role = request.body;
     const newRole = new Role(role);
     try {
@@ -76,10 +76,10 @@ const generateRefreshToken = (user) => {
 }
 
 
-export const role = async (request, response) => {
+export const roles = async (request, response) => {
     try {
-        const roles = await Role.find({});
-        response.status(200).json(roles);
+        const rolesList = await Role.find({});
+        response.status(200).json(rolesList);
     } catch {
         response.status(405).json({ message: error.message })
     }
@@ -88,52 +88,145 @@ export const role = async (request, response) => {
 export const assignedUsers = async (request, response) => {
     try {
         console.log(request.body)
-        const users = await User.findOne( {username: request.body.user.id} )
-        .populate('assignedUser');
+        console.log("assignedUsers")
+
+        const users = await User.findOne({ username: request.body.user.id })
+            .populate('assignedUser');
         response.status(200).json(users);
     } catch {
         response.status(404).json({ message: error.message })
     }
 }
 
-export const customers = async (request, response) => {
+// to get all users of a specific category (ex agent,customers etc) 
+export const users = async (request, response) => {
     try {
-        const users = await User.find({});
+        console.log(request.body)
+        console.log("users0")
+
+        const users = await User.find({ role: request.body.user.id })
+            .populate('assignedUser');
+        console.log(users)
         response.status(200).json(users);
     } catch {
         response.status(404).json({ message: error.message })
     }
 }
 
-export const agents = async (request, response) => {
+export const getUserList = async (request, response) => {
     try {
-        const users = await User.find({ role: "agent" }).populate('assignedUser');
-        response.status(200).json(users);
+        const userList = await User.find({});
+        response.status(200).json(userList);
     } catch {
-        response.status(404).json({ message: error.message })
+        response.status(405).json({ message: error.message })
     }
 }
 
-export const accountants = async (request, response) => {
+export const assigning = async (request, response) => {
+    // const role = request.body;
+    // const newRole = new User(role);
     try {
-        const users = await User.find({ isAcc: true });
-        response.status(200).json(users);
+        // await newRole.save()
+        console.log("assigning")
+        const spUser = await User.find({ username: request.body.superUser });
+        console.log("spUser0" + spUser.username)
+        const user = await User.find({ username: request.body.user });
+        console.log("user0" + user.username)
+
+        spUser.assignedUser.push(user.id)
+
+
+        await User.updateOne({ username: spUser.username }, spUser);
+        response.status(200).json(spUser);
     } catch {
-        response.status(404).json({ message: error.message })
+        response.status(400).json({ message: error.message })
     }
 }
+
+
+//CRUD OPERATIONs
+
+export const getUser = async (request, response) => {
+    console.log(request.params);
+    try {
+        const user = await User.find({ username: request.params.id });
+        console.log("getUser")
+        response.status(200).json(user);
+    } catch {
+        response.status(405).json({ message: error.message })
+    }
+}
+
+export const editUser = async (request, response) => {
+    let user = request.body;
+    const editUser = new User(user);
+
+    try {
+        await User.updateOne({ username: request.params.id }, editUser);
+        response.status(201).json(editUser);
+    } catch (error) {
+        response.status(409).json({ message: "errorderabc" });
+    }
+}
+
+export const getRole = async (request, response) => {
+    console.log(request.params);
+    try {
+        const user = await Role.find({ role: request.params.id });
+        response.status(200).json(user);
+    } catch {
+        response.status(405).json({ message: error.message })
+    }
+}
+
+
+export const editRole = async (request, response) => {
+    let user = request.body;
+    const editRole = new Role(user);
+
+    try {
+        await Role.updateOne({ role: request.params.id }, editRole);
+        response.status(201).json(editRole);
+    } catch (error) {
+        response.status(409).json({ message: "errorderabc" });
+    }
+}
+
+
+export const deleteUser = async (request, response) => {
+    try {
+        await User.deleteOne({ _id: request.params.id })
+        response.status(200).json(deleteUser);
+    } catch (error) {
+        response.status(408).json({ message: error.message })
+    }
+}
+
+// export const agents = async (request, response) => {
+//     try {
+//         const users = await User.find({ role: "agent" }).populate('assignedUser');
+//         response.status(200).json(users);
+//     } catch {
+//         response.status(404).json({ message: error.message })
+//     }
+// }
+
+
 
 
 
 export const loginUser = async (req, res) => {
-    // const { username, password } = req.body;
-    // const user = await User.findOne({ username: req.body.username, password: req.body.password });
+    //res.send({ msg: "Ok" })
+    //console.log(req.body.username)
+
     const user = await User.findOne({ username: req.body.username });
+    //console.log(user)
     if (!user) {
         return res.status(400).json("username incorrect")
     }
     try {
         let match = await bcrypt.compare(req.body.password, user.password);
+        //console.log('Match', match)
         if (match) {
             const accessToken = generateAccessToken(user);
             const refreshToken = generateRefreshToken(user);
@@ -142,22 +235,13 @@ export const loginUser = async (req, res) => {
             user.refreshToken = refreshToken
             user.save()
 
-            // const newToken = new token({ token: refreshToken })
-            // await newToken.save()
-
-            return res.status(200).json({
-                username: user.username,
-                isAdmin: user.isAdmin,
-                isAcc: user.isAcc,
-                isAgent: user.isAgent,
-                accessToken: user.accessToken,
-                refreshToken: user.refreshToken
-            })
+            res.status(200).json(user)
         } else {
 
             res.status(400).json("username or password incorrect!");
         }
-    } catch {
+    } catch (err) {
+        console.log(err)
         res.status(404).json("some error occured dunno what tho")
     }
 

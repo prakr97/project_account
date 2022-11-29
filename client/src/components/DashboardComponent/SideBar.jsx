@@ -3,8 +3,23 @@
 
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { getAllRoles } from '../../service/api';
 
 export default function SideBar() {
+
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        allRoles();
+    }, []);
+
+    const allRoles = async () => {
+        const response = await getAllRoles();
+        setUsers(response.data);
+        // console.log(response.data);
+    }
+
     return (
         <div className="hold-transition sidebar-mini layout-fixed">
             {/* Main Sidebar Container */}
@@ -53,7 +68,7 @@ export default function SideBar() {
                                             <p>Add Role</p>
                                         </NavLink>
                                     </li>
-                                    
+
                                     <li className="nav-item">
                                         <NavLink to='/addLoan' className="nav-link">
                                             <i className="far fa-circle nav-icon" />
@@ -67,23 +82,34 @@ export default function SideBar() {
                                         </NavLink>
                                     </li>
 
-                                    
+
 
                                 </ul>
                             </li>
 
 
-                           
+
+
+
 
                             <li className="nav-item">
-                                <NavLink to='/role' className="nav-link">
+                                <NavLink to='/roles' className="nav-link">
                                     <i className="nav-icon fas fa-user-tie" />
                                     <p>Roles</p>
                                 </NavLink>
                             </li>
 
+                            {
+                                users.map(user => (
+                                    <li className="nav-item">
+                                        <NavLink to={'/' + user.role} className="nav-link">
+                                            <i className="nav-icon fas fa-user-tie" />
+                                            <p>{user.role}</p>
+                                        </NavLink>
+                                    </li>
+                                ))}
 
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <NavLink to='/agents' className="nav-link">
                                     <i className="nav-icon fas fa-user-tie" />
                                     <p>Agents</p>
@@ -101,7 +127,7 @@ export default function SideBar() {
                                     <i className="nav-icon fas fa-users" />
                                     <p>Customers</p>
                                 </NavLink>
-                            </li>
+                            </li> */}
                             <li className="nav-item">
                                 <a href="iframe.html" className="nav-link">
                                     <i className="nav-icon fas fa-book" />

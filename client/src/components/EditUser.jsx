@@ -3,11 +3,12 @@
 
 import React from 'react';
 import { useState, useEffect } from 'react'
-import { addUserInfo, getAllRoles, getUserList, assigning } from '../service/api.js'
+import { editUser, getUser, getAllRoles } from '../service/api.js'
 // import { FormGroup, FormControl, InputLabel, Input, Typography, styled, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom'
 import SideBar from './DashboardComponent/SideBar'
 import Header from './DashboardComponent/Header'
+import { useParams } from 'react-router-dom'
 
 const mystyle = {
 
@@ -20,10 +21,9 @@ const defaultValue = {
     password: '',
     role: '',
     assignedUser: [],
-    // assignTo: '',
     status: 'false',
-    createdDate: new Date(),
-    modifiedDate: '',
+    createdDate: '',
+    modifiedDate: new Date(),
     accessToken: '',
     refreshToken: ''
 
@@ -31,33 +31,33 @@ const defaultValue = {
 
 
 
-const AddUserInfo = () => {
+const EditUser = () => {
+    const { id } = useParams();
+    console.log(id)
 
     const [user, setUser] = useState(defaultValue);
     const [arole, setArole] = useState([]);
-
-    const [userlist, setUserlist] = useState([]);
-
 
     const navigate = useNavigate();
 
 
     useEffect(() => {
         getRole();
-        getAllUserList();
+        loadUserDetail();
     }, []);
 
-    const getAllUserList = async () => {
-        const response = await getUserList();
-        setUserlist(response.data)
+    const getRole = async () => {
+        const response = await getAllRoles();
+        setArole(response.data)
         console.log(response.data)
     }
 
-    const getRole = async () => {
-        const arole = await getAllRoles();
-        setArole(arole.data)
-        console.log(arole.data)
+    const loadUserDetail = async () => {
+        const response = await getUser(id);
+        setUser(response.data[0])
+        console.log(response.data[0])
     }
+
 
 
     const onValueChange = (e) => {
@@ -66,16 +66,11 @@ const AddUserInfo = () => {
         setUser({ ...user, [e.target.name]: e.target.value })
     }
 
-    const addUserDetails = async () => {
+    const editUserDetails = async (e) => {
+        e.preventDefault()
+        await editUser(user, id);
 
-        // const response = await assigning(user.username, user.assignTo)
-        const response1 = await addUserInfo(user);
-        // console.log("hi from blow")
-        console.log(response1.data)
-
-        // console.log(response.assignedUser)
-
-        // navigate('/')
+        navigate('/')
     }
 
     return (
@@ -102,26 +97,26 @@ const AddUserInfo = () => {
                                         <div className="card-body">
                                             <div className="form-group">
                                                 <label htmlFor="exampleInputEmail1">Name</label>
-                                                <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Enter name" onChange={(e) => onValueChange(e)} name="name" />
+                                                <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Enter name" onChange={(e) => onValueChange(e)} name="name" value={user.name} />
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="exampleInputEmail2">Username</label>
-                                                <input type="text" className="form-control" id="exampleInputEmail2" placeholder="Enter username" onChange={(e) => onValueChange(e)} name="username" />
+                                                <input type="text" className="form-control" id="exampleInputEmail2" placeholder="Enter username" onChange={(e) => onValueChange(e)} name="username" value={user.username} />
                                             </div>
 
 
 
-                                            <div className="form-group">
+                                            {/* <div className="form-group">
                                                 <label htmlFor="exampleInputPassword1">Password</label>
-                                                <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Enter password" onChange={(e) => onValueChange(e)} name="password" />
-                                            </div>
+                                                <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Enter password" onChange={(e) => onValueChange(e)} name="password" value={user.password} />
+                                            </div> */}
 
 
 
                                             {/* select */}
                                             <div className="form-group">
                                                 <label>Role</label>
-                                                <select className="form-control" name='role' onChange={(e) => onValueChange(e)}>
+                                                <select className="form-control" name='role' onChange={(e) => onValueChange(e)} value={user.role}>
                                                     {
                                                         arole.map(r => (
 
@@ -132,26 +127,12 @@ const AddUserInfo = () => {
                                                 </select>
                                             </div>
 
-                                            {/* for displaying all users */}
-                                            {/* <div className="form-group">
-                                                <label>Assign to</label>
-                                                <select className="form-control" name='assignTo' onChange={(e) => onValueChange(e)}>
-                                                    {
-                                                        userlist.map(r => (
-
-                                                            <option value={r.username}>{r.name}</option>
-                                                        ))}
-
-
-                                                </select>
-                                            </div> */}
-
 
 
                                         </div>
                                         {/* /.card-body */}
                                         <div className="card-footer">
-                                            <button type="submit" className="btn btn-primary" onClick={() => addUserDetails()}>Submit</button>
+                                            <button type="submit" className="btn btn-primary" onClick={(e) => editUserDetails(e)}>Submit</button>
                                         </div>
                                     </form>
                                 </div>
@@ -164,5 +145,5 @@ const AddUserInfo = () => {
     )
 }
 
-export default AddUserInfo;
+export default EditUser;
 
