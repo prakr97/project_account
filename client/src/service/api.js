@@ -40,12 +40,6 @@ export const addRole = async (data) => {
 }
 
 
-
-
-
-
-
-
 export const addLoan = async (data) => {
     try {
 
@@ -168,15 +162,73 @@ export const deleteUser = async (id) => {
         console.log('error while calling deleteUser api', error)
     }
 }
-// export const getAgents = async () => {
-//     try {
-//         return await axios.get(`${URL}/agents`)
-//     } catch (error) {
-//         console.log('error while calling getAgents api', error)
-//     }
-// }
+
+export const deleteLoan = async (id) => {
+    try {
+        return await axios.delete(`${URL}/deleteLoan/${id}`)
+    } catch (error) {
+        console.log('error while calling deleteLoan api', error)
+    }
+}
+
+export const approveLoan = async (id) => {
+    try {
+        return await axios.post(`${URL}/approveLoan/${id}`)
+    } catch (error) {
+        console.log('error while calling approveLoan api', error)
+    }
+}
 
 
+export const getLoan = async () => {
+    try {
+        return await axios.get(`${URL}/loan`)
+    } catch (error) {
+        console.log('error while calling getLoan api', error)
+    }
+}
+
+export const getPendingLoan = async () => {
+    try {
+        return await axios.get(`${URL}/loanPending`)
+    } catch (error) {
+        console.log('error while calling getPendingLoan api', error)
+    }
+}
+
+export const getReceipt = async () => {
+    try {
+        return await axios.get(`${URL}/receipt`)
+    } catch (error) {
+        console.log('error while calling getReceipt api', error)
+    }
+}
+
+export const getPendingReceipt = async () => {
+    try {
+        return await axios.get(`${URL}/receiptPending`)
+    } catch (error) {
+        console.log('error while calling getPendingReceipt api', error)
+    }
+}
+
+
+export const deleteReceipt = async (id) => {
+    try {
+        return await axios.delete(`${URL}/deleteReceipt/${id}`)
+    } catch (error) {
+        console.log('error while calling deleteReceipt api', error)
+    }
+}
+
+export const approveReceipt = async (receipt) => {
+    try {
+        console.log(receipt)
+        return await axios.post(`${URL}/approveReceipt`, receipt)
+    } catch (error) {
+        console.log('error while calling approveReceipt api', error)
+    }
+}
 /*
 const refreshToken = async () => {
     try {

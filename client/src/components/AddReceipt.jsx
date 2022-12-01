@@ -4,72 +4,51 @@
 import React from 'react';
 import { useState } from 'react'
 import { addReceipt } from '../service/api.js'
-// import {FormGroup, FormControl, InputLabel, Input, Typography, styled, Button} from '@mui/material';
 import { useNavigate } from 'react-router-dom'
 import SideBar from './DashboardComponent/SideBar'
 import Header from './DashboardComponent/Header'
+import { useParams } from 'react-router-dom'
+
 
 const mystyle = {
-    // color: "white",
-    // backgroundColor: "DodgerBlue",
-    // padding: "10px",
-    // fontFamily: "Arial"
+
     margin: 'auto',
     marginTop: '70px',
 
 };
 
-const defaultValue = {
-    loanId: '',
-    loanNumber: '',
-    amt: '',
-    duration: ''
 
-}
 
 const AddReceipt = () => {
+    const { id } = useParams();
+    console.log(id)
 
-    const [user, setUser] = useState(defaultValue);
+    const defaultValue = {
+        toCustomer: id,
+        loanNumber: '',
+        receiptNumber: '',
+        amt: '',
+        approve: false
+    }
+
+    const [receipt, setReceipt] = useState(defaultValue);
 
     const navigate = useNavigate();
 
     const onValueChange = (e) => {
         console.log(e)
         console.log(e.target.name, e.target.value)
-        setUser({ ...user, [e.target.name]: e.target.value })
+        setReceipt({ ...receipt, [e.target.name]: e.target.value })
     }
 
-    const addReceiptDetails = async () => {
-        await addReceipt(user);
-        navigate('/')
+    const addReceiptDetails = async (e) => {
+        e.preventDefault();
+        await addReceipt(receipt);
+        navigate('/receipt')
     }
 
     return (
         <>
-            {/* <Container>
-                <Typography variant='h4'>Receipt Details</Typography>
-                <FormControl>
-                    <InputLabel>Loan Id</InputLabel>
-                    <Input onChange={(e) => onValueChange(e)} name="loanId" />
-                </FormControl>
-
-                <FormControl>
-                    <InputLabel>Loan Number</InputLabel>
-                    <Input onChange={(e) => onValueChange(e)} name="loanNumber" />
-                </FormControl>
-                <FormControl>
-                    <InputLabel>Amount</InputLabel>
-                    <Input onChange={(e) => onValueChange(e)} name="amt" />
-                </FormControl>
-                <FormControl>
-                    <InputLabel>Duration</InputLabel>
-                    <Input onChange={(e) => onValueChange(e)} name="duration" />
-                </FormControl>
-
-                <FormControl>
-                    <Button variant="contained" onClick={() => addReceiptDetails()}>Add Receipt</Button>
-                </FormControl>
-            </Container> */}
 
             <SideBar />
             <Header />
@@ -89,28 +68,26 @@ const AddReceipt = () => {
                                     {/* form start */}
                                     <form>
                                         <div className="card-body" >
+
                                             <div className="form-group">
-                                                <label htmlFor="exampleInputEmail1">Receipt Id</label>
-                                                <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Enter Loan Id" onChange={(e) => onValueChange(e)} name="loanId" />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="exampleInputEmail1">Receipt Number</label>
+                                                <label htmlFor="exampleInputEmail1">Loan Number</label>
                                                 <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Enter Loan Number" onChange={(e) => onValueChange(e)} name="loanNumber" />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="exampleInputEmail1">Amount</label>
-                                                <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Enter Loan Amount" onChange={(e) => onValueChange(e)} name="amt" />
+                                                <label htmlFor="exampleInputEmail1">Receipt Number</label>
+                                                <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Enter Receipt Number" onChange={(e) => onValueChange(e)} name="receiptNumber" />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="exampleInputEmail1">Duration</label>
-                                                <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Enter Duration" onChange={(e) => onValueChange(e)} name="duration" />
+                                                <label htmlFor="exampleInputEmail1">Amount</label>
+                                                <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Enter Receipt Amount" onChange={(e) => onValueChange(e)} name="amt" />
                                             </div>
+
 
 
                                         </div>
                                         {/* /.card-body */}
                                         <div className="card-footer" >
-                                            <button type="submit" className="btn btn-primary" style={{ backgroundColor: '#2a9d8f', borderColor: '#2a9d8f' }} onClick={() => addReceiptDetails()}>Submit</button>
+                                            <button type="submit" className="btn btn-primary" style={{ backgroundColor: '#2a9d8f', borderColor: '#2a9d8f' }} onClick={(e) => addReceiptDetails(e)}>Submit</button>
                                         </div>
                                     </form>
                                 </div>

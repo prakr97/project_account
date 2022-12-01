@@ -48,18 +48,23 @@ const roleSchema = mongoose.Schema({
 
 const LoanSchema = mongoose.Schema({
 
-    loanId: String,
+
     loanNumber: String,
     amt: String,
-    duration: String
+    duration: String,
+    toCustomer: String,
+    approve: Boolean
 })
 
 const ReceiptSchema = mongoose.Schema({
 
-    loanId: String,
-    loanNumber: String,
+    toCustomer: String,
+    receiptNumber: String,
     amt: String,
-    duration: String
+    approve: Boolean,
+    loanNumber: String,
+
+
 })
 
 export const Loan = mongoose.model('loan', LoanSchema)

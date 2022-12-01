@@ -43,9 +43,7 @@ export default function SideBar() {
 
                     <nav className="mt-2">
                         <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            {/* Add icons to the links using the .nav-icon class
-         with font-awesome or any other icon font library */}
-                            { /* form */}
+
                             <li className="nav-item">
                                 <a href="#" className="nav-link">
                                     <i className="nav-icon fas fa-edit" />
@@ -68,21 +66,6 @@ export default function SideBar() {
                                             <p>Add Role</p>
                                         </NavLink>
                                     </li>
-
-                                    <li className="nav-item">
-                                        <NavLink to='/addLoan' className="nav-link">
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Add Loan</p>
-                                        </NavLink>
-                                    </li>
-                                    <li className="nav-item">
-                                        <NavLink to='/addReceipt' className="nav-link">
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Add Receipt</p>
-                                        </NavLink>
-                                    </li>
-
-
 
                                 </ul>
                             </li>
@@ -109,36 +92,34 @@ export default function SideBar() {
                                     </li>
                                 ))}
 
-                            {/* <li className="nav-item">
-                                <NavLink to='/agents' className="nav-link">
+
+
+                            <li className="nav-item">
+                                <NavLink to='/loans' className="nav-link">
                                     <i className="nav-icon fas fa-user-tie" />
-                                    <p>Agents</p>
-                                </NavLink>
-                            </li>
-                           
-                            <li className="nav-item">
-                                <NavLink to='/accountants' className="nav-link">
-                                    <i className="nav-icon fas fa-book" />
-                                    <p>Accountants</p>
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to='/customers' className="nav-link">
-                                    <i className="nav-icon fas fa-users" />
-                                    <p>Customers</p>
-                                </NavLink>
-                            </li> */}
-                            <li className="nav-item">
-                                <a href="iframe.html" className="nav-link">
-                                    <i className="nav-icon fas fa-book" />
                                     <p>Loans</p>
-                                </a>
+                                </NavLink>
                             </li>
+
                             <li className="nav-item">
-                                <a href="iframe.html" className="nav-link">
+                                <NavLink to='/loanPending' className="nav-link">
+                                    <i className="nav-icon fas fa-user-tie" />
+                                    <p>Pending Loans</p>
+                                </NavLink>
+                            </li>
+
+                            <li className="nav-item">
+                                <NavLink to='/receipt' className="nav-link">
                                     <i className="nav-icon fas fa-receipt" />
-                                    <p>Receipts</p>
-                                </a>
+                                    <p>Receipt</p>
+                                </NavLink>
+                            </li>
+
+                            <li className="nav-item">
+                                <NavLink to='/receiptPending' className="nav-link">
+                                    <i className="nav-icon fas fa-receipt" />
+                                    <p>Pending Receipt</p>
+                                </NavLink>
                             </li>
 
                         </ul>

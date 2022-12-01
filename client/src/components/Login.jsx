@@ -25,6 +25,7 @@ const AddLogin = () => {
         setUser({ ...user, [e.target.name]: e.target.value })
     }
 
+
     const addLoginDetails = async (event) => {
         event.preventDefault()
         await loginUser(user)

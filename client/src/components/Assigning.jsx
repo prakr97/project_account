@@ -14,22 +14,27 @@ const mystyle = {
     marginTop: '70px'
 };
 
-// const defaultValue = {
-//     role: ''
+const assigning_def = {
+    assigning_to: ''
 
-// }
+}
+
+const mainUser_def = {
+    mainUser_username: ''
+
+}
 
 const Assigning = () => {
     const { id } = useParams();
     // console.log(id)
 
     const [userlist, setUserlist] = useState([]);
-    const [user, setUser] = useState('')
+    const [user, setUser] = useState(mainUser_def)
 
     useEffect(() => {
         getAllUserList();
         getUserID();
-    }, [1]);
+    }, []);
 
     const getAllUserList = async () => {
         const response = await getUserList();
@@ -43,15 +48,15 @@ const Assigning = () => {
         setUser(response.data[0].username)
     }
 
-    const [assignedto, setAssignedto] = useState('');
+    const [assignedto, setAssignedto] = useState(assigning_def);
 
     // const navigate = useNavigate();
 
     const onValueChange = (e) => {
-        console.log(e)
+        // console.log(e.target.name)
         console.log(e.target.name, e.target.value)
         setAssignedto({ ...assignedto, [e.target.name]: e.target.value })
-        console.log("ho" + assignedto)
+        console.log(assignedto)
     }
 
     const assigningUser = async () => {
@@ -86,7 +91,7 @@ const Assigning = () => {
 
                                             <div className="form-group">
                                                 <label>Assign to</label>
-                                                <select className="form-control" name='st' onChange={(e) => onValueChange(e)}>
+                                                <select className="form-control" name='assigning_to' onChange={(e) => onValueChange(e)}>
                                                     {
                                                         userlist.map(r => (
 

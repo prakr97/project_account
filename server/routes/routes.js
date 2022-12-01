@@ -1,10 +1,17 @@
 import express from 'express';
-import { addLoan, addReceipt, loginUser, addUser, addRole, roles, assignedUsers, users, getRole, editRole, getUser, editUser, getUserList, assigning, deleteUser } from '../user-controller/user-controller.js'
+import { addLoan, allLoan, addReceipt, pendingLoan, approveLoan, deleteLoan, allReceipt, pendingReceipt, approveReceipt, loginUser, addUser, addRole, roles, assignedUsers, users, getRole, editRole, getUser, editUser, getUserList, assigning, deleteUser } from '../user-controller/user-controller.js'
 
 const router = express.Router();
 
 router.post('/addLoan', addLoan)
+router.get('/loanPending', pendingLoan)
+router.delete('/deleteLoan/:id', deleteLoan)
+router.post('/approveLoan/:id', approveLoan)
+router.get('/loan', allLoan)
 router.post('/addReceipt', addReceipt)
+router.get('/receipt', allReceipt)
+router.get('/receiptPending', pendingReceipt)
+router.post('/approveReceipt', approveReceipt)
 router.post('/login', loginUser)
 router.post('/addUser', addUser)
 router.post('/addRole', addRole)

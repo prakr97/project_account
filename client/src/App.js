@@ -15,6 +15,10 @@ import Users from './components/Users';
 import EditRole from './components/EditRole';
 import EditUser from './components/EditUser';
 import Assigning from './components/Assigning';
+import Loans from './components/Loans';
+import Receipt from './components/Receipt';
+import LoanPending from './components/LoanPending';
+import ReceiptPending from './components/ReceiptPending';
 
 
 function App() {
@@ -24,8 +28,14 @@ function App() {
         <Routes>
           <Route path='/' element={<Dashboard />} />
 
-          <Route path='/addLoan' element={<AddLoan />} />
-          <Route path='/addReceipt' element={<AddReceipt />} />
+          <Route path='/addLoan/:id' element={<AddLoan />} />
+          <Route path='/loans' element={<Loans />} />
+          <Route path='/loanPending' element={<LoanPending />} />
+
+          <Route path='/addReceipt/:id' element={<AddReceipt />} />
+          <Route path='/receipt' element={<Receipt />} />
+          <Route path='/receiptPending' element={<ReceiptPending />} />
+
           <Route path='/login' element={<AddLogin />} />
           <Route path='/:id' element={<Users />} />
           <Route path='/editUser/:id' element={<EditUser />} />

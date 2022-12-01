@@ -33,9 +33,6 @@ export const addRole = async (request, response) => {
 }
 
 
-
-
-
 export const addLoan = async (request, response) => {
     const loan = request.body;
     const newLoan = new Loan(loan);
@@ -85,6 +82,42 @@ export const roles = async (request, response) => {
     }
 }
 
+export const allLoan = async (request, response) => {
+    try {
+        const LoanList = await Loan.find({ approve: true });
+        response.status(200).json(LoanList);
+    } catch {
+        response.status(405).json({ message: error.message })
+    }
+}
+
+export const pendingLoan = async (request, response) => {
+    try {
+        const LoanList = await Loan.find({ approve: false });
+        response.status(200).json(LoanList);
+    } catch {
+        response.status(405).json({ message: error.message })
+    }
+}
+export const allReceipt = async (request, response) => {
+    try {
+        const ReceiptList = await Receipt.find({ approve: true });
+        response.status(200).json(ReceiptList);
+    } catch {
+        response.status(405).json({ message: error.message })
+    }
+}
+
+export const pendingReceipt = async (request, response) => {
+    try {
+        const ReceiptList = await Receipt.find({ approve: false });
+        response.status(200).json(ReceiptList);
+    } catch {
+        response.status(405).json({ message: error.message })
+    }
+}
+
+
 export const assignedUsers = async (request, response) => {
     try {
         console.log(request.body)
@@ -128,15 +161,15 @@ export const assigning = async (request, response) => {
     try {
         // await newRole.save()
         console.log("assigning")
-        const spUser = await User.find({ username: request.body.superUser });
+        const spUser = await User.find({ username: request.body.superUser.assigning_to });
         console.log("spUser0" + spUser.username)
-        const user = await User.find({ username: request.body.user });
+        const user = await User.find({ username: request.body.user.mainUser_username });
         console.log("user0" + user.username)
 
-        spUser.assignedUser.push(user.id)
+        spUser.assignedUser.push(user._id.valueOf())
 
 
-        await User.updateOne({ username: spUser.username }, spUser);
+        // await User.updateOne({ username: spUser.username }, spUser);
         response.status(200).json(spUser);
     } catch {
         response.status(400).json({ message: error.message })
@@ -202,15 +235,51 @@ export const deleteUser = async (request, response) => {
     }
 }
 
-// export const agents = async (request, response) => {
-//     try {
-//         const users = await User.find({ role: "agent" }).populate('assignedUser');
-//         response.status(200).json(users);
-//     } catch {
-//         response.status(404).json({ message: error.message })
-//     }
-// }
 
+export const deleteLoan = async (request, response) => {
+    try {
+        console.log(request.body.id)
+        await Loan.deleteOne({ toCustomer: request.params.id })
+        response.status(200).json(deleteLoan);
+    } catch (error) {
+        response.status(408).json({ message: error.message })
+    }
+}
+
+export const approveLoan = async (request, response) => {
+    try {
+        console.log(request.params)
+        const username = { toCustomer: request.params.id }
+        console.log(username)
+        const updateApproval = { approve: true }
+        console.log(updateApproval)
+        await Loan.findOneAndUpdate(username, updateApproval)
+        response.status(200).json(approveLoan);
+    } catch (error) {
+        response.status(408).json({ message: error.message })
+    }
+}
+
+export const approveReceipt = async (request, response) => {
+    try {
+        console.log(request.body)
+        const rNo = request.body.receiptNumber.id
+        console.log(rNo)
+        // const updateApproval = { approve: true }
+        // console.log(updateApproval)
+        const rInfo = await Receipt.findOne({ receiptNumber: rNo })
+        const rAmt = rInfo.amt
+        const lNo = rInfo.loneNumber
+        const lInfo = await Loan.findOne({ loanNumber: lNo })
+        const lAmt = lInfo.amt - rAmt
+        await Loan.findOneAndUpdate({ loanNumber: lNo }, { amt: lAmt })
+        await Receipt.findOneAndUpdate({ receiptNumber: rNo }, { approve: true })
+
+        response.status(200).json(approveReceipt);
+    } catch (error) {
+        response.status(408).json({ message: error.message })
+    }
+}
 
 
 

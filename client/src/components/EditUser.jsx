@@ -105,15 +105,6 @@ const EditUser = () => {
                                             </div>
 
 
-
-                                            {/* <div className="form-group">
-                                                <label htmlFor="exampleInputPassword1">Password</label>
-                                                <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Enter password" onChange={(e) => onValueChange(e)} name="password" value={user.password} />
-                                            </div> */}
-
-
-
-                                            {/* select */}
                                             <div className="form-group">
                                                 <label>Role</label>
                                                 <select className="form-control" name='role' onChange={(e) => onValueChange(e)} value={user.role}>
