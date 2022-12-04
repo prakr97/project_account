@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react'
 import { assigning, getUser, getUserList } from '../service/api.js'
 // import { FormGroup, FormControl, InputLabel, Input, Typography, styled, Button, FormControlLabel, RadioGroup, FormLabel, Radio } from '@mui/material';
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import SideBar from './DashboardComponent/SideBar'
 import Header from './DashboardComponent/Header'
 import { useParams } from 'react-router-dom'
@@ -19,21 +19,21 @@ const assigning_def = {
 
 }
 
-const mainUser_def = {
-    mainUser_username: ''
+// const mainUser_def = {
+//     mainUser_username: ''
 
-}
+// }
 
 const Assigning = () => {
     const { id } = useParams();
-    // console.log(id)
+    console.log(id)
 
     const [userlist, setUserlist] = useState([]);
-    const [user, setUser] = useState(mainUser_def)
+    // const [user, setUser] = useState(mainUser_def)
 
     useEffect(() => {
         getAllUserList();
-        getUserID();
+        // getUserID();
     }, []);
 
     const getAllUserList = async () => {
@@ -42,32 +42,28 @@ const Assigning = () => {
         console.log(response.data)
     }
 
-    const getUserID = async () => {
-        const response = await getUser(id)
-        console.log(response.data[0].username)
-        setUser(response.data[0].username)
-    }
+
+    const navigate = useNavigate();
 
     const [assignedto, setAssignedto] = useState(assigning_def);
-
-    // const navigate = useNavigate();
 
     const onValueChange = (e) => {
         // console.log(e.target.name)
         console.log(e.target.name, e.target.value)
-        setAssignedto({ ...assignedto, [e.target.name]: e.target.value })
-        console.log(assignedto)
+        setAssignedto({ [e.target.name]: e.target.value })
+        console.log(assignedto.assigning_to)
     }
 
-    const assigningUser = async () => {
+    const assigningUser = async (e) => {
         // console.log(assignedto)
-        await assigning(user, assignedto)
+        e.preventDefault()
+        await assigning(id, assignedto)
+        navigate(-1)
     }
 
 
     return (
         <>
-
 
             <SideBar />
             <Header />
@@ -88,7 +84,6 @@ const Assigning = () => {
                                     <form>
                                         <div className="card-body">
 
-
                                             <div className="form-group">
                                                 <label>Assign to</label>
                                                 <select className="form-control" name='assigning_to' onChange={(e) => onValueChange(e)}>
@@ -106,7 +101,7 @@ const Assigning = () => {
                                         </div>
                                         {/* /.card-body */}
                                         <div className="card-footer">
-                                            <button type="submit" className="btn btn-primary" style={{ backgroundColor: '#e63946', borderColor: '#e63946' }} onClick={() => assigningUser()}>Submit</button>
+                                            <button type="submit" className="btn btn-primary" style={{ backgroundColor: '#e63946', borderColor: '#e63946' }} onClick={(e) => assigningUser(e)}>Submit</button>
                                         </div>
                                     </form>
                                 </div>

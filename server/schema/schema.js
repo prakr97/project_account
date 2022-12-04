@@ -40,14 +40,16 @@ const userSchema = mongoose.Schema({
 const roleSchema = mongoose.Schema({
     role: {
         type: String,
-        // required: true
-    }
+    },
+    accessTo: [{
+        type: Schema.Types.String,
+        ref: 'role'
+    }],
 })
 
 
 
 const LoanSchema = mongoose.Schema({
-
 
     loanNumber: String,
     amt: String,

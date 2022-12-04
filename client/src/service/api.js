@@ -64,12 +64,40 @@ export const addReceipt = async (data) => {
 export const loginUser = async (data) => {
     try {
         console.log('##hii')
-        return await axios.post(`${URL}/login`, data)
+        return await axios.post(`${URL}/login`, data).then((response) => {
+            if (response.data.accessToken) {
+                localStorage.setItem("user", JSON.stringify(response.data))
+            }
+            return response.data
+        })
     } catch (error) {
         console.log('Error while calling login user Api', error);
     }
 
 }
+
+// export default function authHeader() {
+//     const user = JSON.parse(localStorage.getItem("user"));
+
+//     if (user && user.accessToken) {
+//       // return { Authorization: 'Bearer ' + user.accessToken };
+//       return { "x-auth-token": user.accessToken };
+//     } else {
+//       return {};
+//     }
+//   }
+
+export default function authHeader() {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user && user.accessToken) {
+        // return { Authorization: 'Bearer ' + user.accessToken };
+        return true;
+    } else {
+        return false;
+    }
+}
+
 
 
 export const getAllRoles = async () => {
@@ -113,7 +141,7 @@ export const getUserList = async () => {
 export const assigning = async (user, superUser) => {
     try {
         console.log(user, superUser)
-        return await axios.post(`${URL}/assigning`, { user, superUser })
+        return await axios.post(`${URL}/assigning/${user}`, superUser)
     } catch (error) {
         console.log('error while calling assigning api', error)
     }
@@ -221,10 +249,10 @@ export const deleteReceipt = async (id) => {
     }
 }
 
-export const approveReceipt = async (receipt) => {
+export const approveReceipt = async (id) => {
     try {
-        console.log(receipt)
-        return await axios.post(`${URL}/approveReceipt`, receipt)
+        console.log(id)
+        return await axios.post(`${URL}/approveReceipt/${id}`)
     } catch (error) {
         console.log('error while calling approveReceipt api', error)
     }

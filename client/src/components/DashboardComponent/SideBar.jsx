@@ -25,10 +25,7 @@ export default function SideBar() {
             {/* Main Sidebar Container */}
             <aside className="main-sidebar sidebar-dark-primary elevation-4">
                 {/* Brand Logo */}
-                <a href="index3.html" className="brand-link">
-                    <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
-                    <span className="brand-text font-weight-light">AdminLTE 3</span>
-                </a>
+
                 {/* Sidebar */}
                 <div className="sidebar">
                     {/* Sidebar user panel (optional) */}
@@ -77,7 +74,7 @@ export default function SideBar() {
 
                             <li className="nav-item">
                                 <NavLink to='/roles' className="nav-link">
-                                    <i className="nav-icon fas fa-user-tie" />
+                                    <i class="nav-icon fa fa-id-card" aria-hidden="true"></i>
                                     <p>Roles</p>
                                 </NavLink>
                             </li>
@@ -96,14 +93,14 @@ export default function SideBar() {
 
                             <li className="nav-item">
                                 <NavLink to='/loans' className="nav-link">
-                                    <i className="nav-icon fas fa-user-tie" />
+                                    <i className="nav-icon fas fa-address-book" />
                                     <p>Loans</p>
                                 </NavLink>
                             </li>
 
                             <li className="nav-item">
                                 <NavLink to='/loanPending' className="nav-link">
-                                    <i className="nav-icon fas fa-user-tie" />
+                                    <i className="nav-icon fas fa-address-book" />
                                     <p>Pending Loans</p>
                                 </NavLink>
                             </li>

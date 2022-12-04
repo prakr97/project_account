@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom'
 // import { Loan } from '../../../server/schema/schema'
 
 
-const defaultValue = {
-    receiptNumber: ''
-}
+// const defaultValue = {
+//     receiptNumber: ''
+// }
 
 const ReceiptPending = () => {
 
@@ -32,16 +32,16 @@ const ReceiptPending = () => {
         setListreceipt(response.data);
     }
 
-    const [receiptNo, setReceiptNo] = useState(defaultValue)
+
     const deleteReceiptDetails = async (id) => {
-        setReceiptNo({ receiptNumber: id })
-        await deleteReceipt(receiptNo)
+
+        await deleteReceipt(id)
         getAllReceipts();
     }
     const approveReceiptDetails = async (id) => {
         console.log(id)
-        setReceiptNo({ receiptNumber: { id } })
-        await approveReceipt(receiptNo)
+
+        await approveReceipt(id)
         getAllReceipts()
     }
 
@@ -80,15 +80,13 @@ const ReceiptPending = () => {
                                     <div className="row">
                                         {
                                             listreceipt.map(l => (
-                                                // console.log(user.assignedUser.name), 
-                                                // setAssign(user.assignedUser),
+
                                                 <>
                                                     <div className="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
                                                         <div className="card bg-light d-flex flex-fill  border border-info">
                                                             <div className="card-header text-muted border-bottom-0">
                                                                 Receipt
                                                             </div>
-                                                            {/* <Link to={'/assignedUsers/' + user.username} className='nav-link'> */}
                                                             <div className="card-body pt-0">
                                                                 <div className="row">
                                                                     <div className="col-7">
@@ -96,8 +94,6 @@ const ReceiptPending = () => {
                                                                         <ul className="ml-4 mb-0 fa-ul text-muted">
                                                                             <li className="small"><span className="fa-li"><i className="fas fa-lg fa-envelope" /></span> Amount: {l.loanNumber}</li>
                                                                             <li className="small"><span className="fa-li"><i className="fas fa-lg fa-envelope" /></span> Amount: {l.amt}</li>
-
-                                                                            {/* <Link to={`/addLoan/${user.username}`} className=" row mx-0 fa-solid fa-user-pen text-success">Aprove</Link> */}
 
                                                                             <Link onClick={() => approveReceiptDetails(l.receiptNumber)} className="fa-solid fa-user-pen mx-2 text-success">Approve</Link>
 

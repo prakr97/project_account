@@ -58,19 +58,6 @@ export const addReceipt = async (request, response) => {
 }
 
 
-//token generate isAdmin: user.isAdmin
-const generateAccessToken = (user) => {
-    return jwt.sign({ id: user.id },
-        "mysecretcode",
-        { expiresIn: "15m" });
-}
-
-const generateRefreshToken = (user) => {
-
-    return jwt.sign({ id: user.id },
-        "myrefreshcode");
-
-}
 
 
 export const roles = async (request, response) => {
@@ -120,8 +107,8 @@ export const pendingReceipt = async (request, response) => {
 
 export const assignedUsers = async (request, response) => {
     try {
-        console.log(request.body)
-        console.log("assignedUsers")
+        // console.log(request.body)
+        // console.log("assignedUsers")
 
         const users = await User.findOne({ username: request.body.user.id })
             .populate('assignedUser');
@@ -134,12 +121,12 @@ export const assignedUsers = async (request, response) => {
 // to get all users of a specific category (ex agent,customers etc) 
 export const users = async (request, response) => {
     try {
-        console.log(request.body)
-        console.log("users0")
+        // console.log(request.body)
+        // console.log("users0")
 
         const users = await User.find({ role: request.body.user.id })
             .populate('assignedUser');
-        console.log(users)
+        // console.log(users)
         response.status(200).json(users);
     } catch {
         response.status(404).json({ message: error.message })
@@ -156,20 +143,18 @@ export const getUserList = async (request, response) => {
 }
 
 export const assigning = async (request, response) => {
-    // const role = request.body;
-    // const newRole = new User(role);
+
     try {
-        // await newRole.save()
-        console.log("assigning")
-        const spUser = await User.find({ username: request.body.superUser.assigning_to });
-        console.log("spUser0" + spUser.username)
-        const user = await User.find({ username: request.body.user.mainUser_username });
-        console.log("user0" + user.username)
 
-        spUser.assignedUser.push(user._id.valueOf())
+        const user_username = request.params.id
+        const superUser_username = request.body.assigning_to
+        const spUser = await User.find({ username: superUser_username });
+        const user = await User.find({ username: user_username });
+        console.log(user[0]._id.valueOf())
+        spUser[0].assignedUser.push(user[0]._id)
+        console.log(spUser[0].assignedUser)
+        await spUser[0].save()
 
-
-        // await User.updateOne({ username: spUser.username }, spUser);
         response.status(200).json(spUser);
     } catch {
         response.status(400).json({ message: error.message })
@@ -262,14 +247,12 @@ export const approveLoan = async (request, response) => {
 
 export const approveReceipt = async (request, response) => {
     try {
-        console.log(request.body)
-        const rNo = request.body.receiptNumber.id
-        console.log(rNo)
-        // const updateApproval = { approve: true }
-        // console.log(updateApproval)
+        console.log(request.params.id)
+        const rNo = request.params.id
+
         const rInfo = await Receipt.findOne({ receiptNumber: rNo })
         const rAmt = rInfo.amt
-        const lNo = rInfo.loneNumber
+        const lNo = rInfo.loanNumber
         const lInfo = await Loan.findOne({ loanNumber: lNo })
         const lAmt = lInfo.amt - rAmt
         await Loan.findOneAndUpdate({ loanNumber: lNo }, { amt: lAmt })
@@ -283,6 +266,19 @@ export const approveReceipt = async (request, response) => {
 
 
 
+//token generate isAdmin: user.isAdmin
+const generateAccessToken = (user) => {
+    return jwt.sign({ id: user.id },
+        "mysecretcode",
+        { expiresIn: "1min" });
+}
+
+const generateRefreshToken = (user) => {
+
+    return jwt.sign({ id: user.id },
+        "myrefreshcode");
+
+}
 
 export const loginUser = async (req, res) => {
     //res.send({ msg: "Ok" })

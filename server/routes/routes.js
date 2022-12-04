@@ -11,7 +11,7 @@ router.get('/loan', allLoan)
 router.post('/addReceipt', addReceipt)
 router.get('/receipt', allReceipt)
 router.get('/receiptPending', pendingReceipt)
-router.post('/approveReceipt', approveReceipt)
+router.post('/approveReceipt/:id', approveReceipt)
 router.post('/login', loginUser)
 router.post('/addUser', addUser)
 router.post('/addRole', addRole)
@@ -26,7 +26,7 @@ router.get('/editUser/:id', getUser)
 router.get('/userList', getUserList)
 router.post('/editUser/:id', editUser)
 
-router.post('/assigning', assigning)
+router.post('/assigning/:id', assigning)
 
 router.delete('/:id', deleteUser)
 

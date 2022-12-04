@@ -1,21 +1,32 @@
 
 
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react'
-import { addRole } from '../service/api.js'
+import { addRole, getAllRoles } from '../service/api.js'
 // import { FormGroup, FormControl, InputLabel, Input, Typography, styled, Button, FormControlLabel, RadioGroup, FormLabel, Radio } from '@mui/material';
 import { useNavigate } from 'react-router-dom'
 import SideBar from './DashboardComponent/SideBar'
 import Header from './DashboardComponent/Header'
 
-const mystyle = {
+const roleStyle = {
     // color: "white",
     // backgroundColor: "DodgerBlue",
     // padding: "10px",
     // fontFamily: "Arial"
     margin: 'auto',
-    marginTop: '70px'
+    marginTop: '70px',
+
+};
+const rolesListStyle = {
+    // color: "white",
+    // backgroundColor: "DodgerBlue",
+    // padding: "10px",
+    // fontFamily: "Arial"
+    margin: 'auto',
+    // marginTop: '70px',
+    display: 'flex',
+    justifyContent: 'center'
 };
 
 const defaultValue = {
@@ -26,6 +37,11 @@ const defaultValue = {
 const AddRole = () => {
 
     const [role, setRole] = useState(defaultValue);
+    const [rolesList, setrolesList] = useState([]);
+    const [selectRoles, setSelectRoles] = useState([]);
+    useEffect(() => {
+        allRoles();
+    }, []);
 
     const navigate = useNavigate();
 
@@ -35,10 +51,22 @@ const AddRole = () => {
         setRole({ ...role, [e.target.name]: e.target.value })
     }
 
+    const handleChange = () => {
+
+        console.log('The checkbox was toggled');
+
+    };
+
     const addRoleDetails = async () => {
         await addRole(role);
         console.log("hi simple")
         navigate('/login')
+    }
+
+
+    const allRoles = async () => {
+        const response = await getAllRoles();
+        setrolesList(response.data);
     }
 
     return (
@@ -48,12 +76,12 @@ const AddRole = () => {
             <SideBar />
             <Header />
 
-            <div class="content-wrapper">
+            <div className="content-wrapper">
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
                             {/* left column */}
-                            <div className="col-md-6" style={mystyle}>
+                            <div className="col-md-6" style={roleStyle}>
                                 {/* general form elements */}
                                 <div className="card card-primary">
                                     <div className="card-header" style={{ backgroundColor: '#e63946' }}>
@@ -80,7 +108,91 @@ const AddRole = () => {
                                 </div>
                                 {/* /.card */}
                             </div>
-                        </div></div></section>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="content">
+                    <div classname="justify-content-center">
+
+
+                        <div className="row" style={rolesListStyle}>
+                            <div className="col-md-6">
+                                {/* /.card */}
+                                <div className="card card-info">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Grant Access</h3>
+                                        <div className="card-tools">
+                                            <button type="button" className="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                                <i className="fas fa-minus" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="card-body p-0">
+                                        <table className="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Roles</th>
+
+                                                    <th />
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {/* {
+                                                users.map(user => (
+                                                    <li className="nav-item">
+                                                        <NavLink to={'/' + user.role} className="nav-link">
+                                                            <i className="nav-icon fas fa-user-tie" />
+                                                            <p>{user.role}</p>
+                                                        </NavLink>
+                                                    </li>
+                                                ))
+                                            } */}
+                                                {
+                                                    rolesList.map(r => (
+                                                        <tr>
+                                                            <td>{r.role}</td>
+                                                            {/* <tr className="text-right py-0 align-middle">
+                                                                <div className="btn-group btn-group-sm">
+                                                                    <a href="#" className="btn btn-info"><i className="fas fa-eye" /></a>
+                                                                    <a href="#" className="btn btn-danger"><i className="fas fa-trash" /></a>
+                                                                </div>
+                                                            </tr> */}
+                                                            <td>
+                                                                <div className="check-primary">
+                                                                    <input type="checkbox" id="check3" onChange={handleChange} />
+                                                                    {/* <label htmlFor="check1" /> */}
+                                                                </div>
+
+                                                            </td>
+
+                                                        </tr>
+                                                    ))
+                                                }
+                                                {/* <tr>
+                                                    <td>Functional-requirements.docx</td>
+                                                    <td>49.8005 kb</td>
+                                                    <td className="text-right py-0 align-middle">
+                                                        <div className="btn-group btn-group-sm">
+                                                            <a href="#" className="btn btn-info"><i className="fas fa-eye" /></a>
+                                                            <a href="#" className="btn btn-danger"><i className="fas fa-trash" /></a>
+                                                        </div>
+                                                    </td>
+                                                </tr> */}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {/* /.card-body */}
+                                </div>
+                                {/* /.card */}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
             </div>
 
         </>

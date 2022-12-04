@@ -7,9 +7,7 @@ import { loginUser } from '../service/api.js'
 import { useNavigate } from 'react-router-dom'
 
 const defaultValue = {
-
     username: '',
-
     password: ''
 }
 
@@ -28,9 +26,13 @@ const AddLogin = () => {
 
     const addLoginDetails = async (event) => {
         event.preventDefault()
-        await loginUser(user)
-        console.log('loginPage success')
-        navigate('/')
+        const user_success = await loginUser(user)
+        if (user_success) {
+            console.log('loginPage success')
+            navigate('/')
+            window.location.reload();
+        }
+        else navigate('/login')
     }
 
     return (

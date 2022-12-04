@@ -61,7 +61,7 @@ const EditRole = () => {
             <SideBar />
             <Header />
 
-            <div class="content-wrapper">
+            <div className="content-wrapper">
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">

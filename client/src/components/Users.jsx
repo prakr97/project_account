@@ -110,8 +110,6 @@ const Users = () => {
                                                                         {superUser.id === 'customer' &&
 
                                                                             <Link to={`/addReceipt/${user.username}`} className="mx-0 fa-solid fa-user-pen text-info">Receipt</Link>
-
-
                                                                         }
 
 

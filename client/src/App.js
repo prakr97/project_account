@@ -19,6 +19,7 @@ import Loans from './components/Loans';
 import Receipt from './components/Receipt';
 import LoanPending from './components/LoanPending';
 import ReceiptPending from './components/ReceiptPending';
+import ProtectedRoutes from './components/ProtectedRoutes';
 
 
 function App() {
@@ -26,29 +27,29 @@ function App() {
     <div className="wrapper">
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Dashboard />} />
+          <Route element={<ProtectedRoutes />} >
+            <Route path='/' element={<Dashboard />} />
+            <Route path='/addLoan/:id' element={<AddLoan />} />
+            <Route path='/loans' element={<Loans />} />
+            <Route path='/loanPending' element={<LoanPending />} />
 
-          <Route path='/addLoan/:id' element={<AddLoan />} />
-          <Route path='/loans' element={<Loans />} />
-          <Route path='/loanPending' element={<LoanPending />} />
+            <Route path='/addReceipt/:id' element={<AddReceipt />} />
+            <Route path='/receipt' element={<Receipt />} />
+            <Route path='/receiptPending' element={<ReceiptPending />} />
 
-          <Route path='/addReceipt/:id' element={<AddReceipt />} />
-          <Route path='/receipt' element={<Receipt />} />
-          <Route path='/receiptPending' element={<ReceiptPending />} />
+            <Route path='/login' element={<AddLogin />} />
+            <Route path='/:id' element={<Users />} />
+            <Route path='/editUser/:id' element={<EditUser />} />
 
-          <Route path='/login' element={<AddLogin />} />
-          <Route path='/:id' element={<Users />} />
-          <Route path='/editUser/:id' element={<EditUser />} />
+            <Route path='/addUser' element={<AddUserInfo />} />
+            <Route path='/addRole' element={<AddRole />} />
+            <Route path='/roles' element={<Roles />} />
+            <Route path='/editRole/:id' element={<EditRole />} />
 
-          <Route path='/addUser' element={<AddUserInfo />} />
-          <Route path='/addRole' element={<AddRole />} />
-          <Route path='/roles' element={<Roles />} />
-          <Route path='/editRole/:id' element={<EditRole />} />
+            <Route path='/assignedUsers/:id' element={<AssignedUser />} />
+            <Route path='/assigning/:id' element={<Assigning />} />
 
-          <Route path='/assignedUsers/:id' element={<AssignedUser />} />
-          <Route path='/assigning/:id' element={<Assigning />} />
-
-
+          </Route>
 
 
 
