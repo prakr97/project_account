@@ -1,5 +1,5 @@
 import express from 'express';
-import { addLoan, allLoan, addReceipt, pendingLoan, approveLoan, deleteLoan, allReceipt, pendingReceipt, approveReceipt, loginUser, addUser, addRole, roles, assignedUsers, users, getRole, editRole, getUser, editUser, getUserList, assigning, deleteUser } from '../user-controller/user-controller.js'
+import { addLoan, allLoan, addReceipt, pendingLoan, approveLoan, deleteLoan, allReceipt, pendingReceipt, approveReceipt, loginUser, addUser, addRole, roles, assignedUsers, rolesaccess, users, getRole, editRole, getUser, editUser, getUserList, assigning, deleteUser } from '../user-controller/user-controller.js'
 
 const router = express.Router();
 
@@ -18,6 +18,7 @@ router.post('/addRole', addRole)
 // router.get('/agents', agents)
 router.get('/roles', roles)
 router.post('/assignedUsers', assignedUsers)
+router.post('/rolesaccess', rolesaccess)
 router.post('/:id', users)
 router.get('/role/:id', getRole)
 router.post('/role/:id', editRole)

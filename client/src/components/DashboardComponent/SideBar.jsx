@@ -4,7 +4,8 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { getAllRoles } from '../../service/api';
+import { allroleaccess, getAllRoles } from '../../service/api';
+
 
 export default function SideBar() {
 
@@ -15,7 +16,8 @@ export default function SideBar() {
     }, []);
 
     const allRoles = async () => {
-        const response = await getAllRoles();
+        const user = JSON.parse(localStorage.getItem("user"));
+        const response = await allroleaccess(user.role);
         setUsers(response.data);
         // console.log(response.data);
     }

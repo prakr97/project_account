@@ -133,6 +133,20 @@ export const users = async (request, response) => {
     }
 }
 
+export const rolesaccess = async (request, response) => {
+    try {
+        console.log(request.body)
+
+
+        const roles = await Role.find({ role: request.body.user.id })
+            .populate('accessTo');
+        // console.log(users)
+        response.status(200).json(roles);
+    } catch {
+        response.status(404).json({ message: error.message })
+    }
+}
+
 export const getUserList = async (request, response) => {
     try {
         const userList = await User.find({});

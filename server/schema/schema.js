@@ -42,7 +42,7 @@ const roleSchema = mongoose.Schema({
         type: String,
     },
     accessTo: [{
-        type: Schema.Types.String,
+        type: String,
         ref: 'role'
     }],
 })

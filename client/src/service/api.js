@@ -127,6 +127,15 @@ export const getUsers = async (user) => {
     }
 }
 
+export const allroleaccess = async (roles) => {
+    try {
+        console.log(roles)
+        return await axios.post(`${URL}/${roles}`, { roles })
+    } catch (error) {
+        console.log('error while calling get rolesaccess api', error)
+    }
+}
+
 // for 'addUserInfo' form to get all users list
 export const getUserList = async () => {
     try {
