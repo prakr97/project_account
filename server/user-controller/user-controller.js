@@ -138,7 +138,7 @@ export const rolesaccess = async (request, response) => {
         console.log(request.body)
 
 
-        const roles = await Role.find({ role: request.body.user.id })
+        const roles = await Role.find({ role: request.body.roles })
             .populate('accessTo');
         // console.log(users)
         response.status(200).json(roles);

@@ -2,13 +2,16 @@
 
 
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { allroleaccess, getAllRoles } from '../../service/api';
+import { allroleaccess, getAllRoles, logout } from '../../service/api';
+// import { logout } from '../../service/auth-header';
 
 
 export default function SideBar() {
 
+    // const { component } = props
+    // console.log(component)
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -18,10 +21,15 @@ export default function SideBar() {
     const allRoles = async () => {
         const user = JSON.parse(localStorage.getItem("user"));
         const response = await allroleaccess(user.role);
-        setUsers(response.data);
-        // console.log(response.data);
+        setUsers(response.data[0].accessTo);
+        console.log(response.data[0].accessTo);
     }
 
+    const logoutUser = () => {
+        logout()
+        window.location.reload();
+
+    }
     return (
         <div className="hold-transition sidebar-mini layout-fixed">
             {/* Main Sidebar Container */}
@@ -36,14 +44,14 @@ export default function SideBar() {
                             <img src="dist/img/user2-160x160.jpg" className="img-circle elevation-2" alt="User Image" />
                         </div>
                         <div className="info">
-                            <a href="#" className="d-block">Alexander Pierce</a>
+                            <Link onClick={() => logoutUser()} className="d-block">Logout</Link>
                         </div>
                     </div>
 
                     <nav className="mt-2">
                         <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <a href="#" className="nav-link">
                                     <i className="nav-icon fas fa-edit" />
                                     <p>
@@ -52,25 +60,26 @@ export default function SideBar() {
                                     </p>
                                 </a>
                                 <ul className="nav nav-treeview">
-                                    <li className="nav-item">
-                                        <NavLink to='/addUser' className="nav-link">
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Add User</p>
-                                        </NavLink>
-                                    </li>
+                                    
 
-                                    <li className="nav-item">
-                                        <NavLink to='/addRole' className="nav-link">
-                                            <i className="far fa-circle nav-icon" />
-                                            <p>Add Role</p>
-                                        </NavLink>
-                                    </li>
+
 
                                 </ul>
+                            </li> */}
+
+                            <li className="nav-item">
+                                <NavLink to='/addUser' className="nav-link">
+                                    <i className="nav-icon fas fa-edit" />
+                                    <p>Add User</p>
+                                </NavLink>
                             </li>
 
-
-
+                            <li className="nav-item">
+                                <NavLink to='/addRole' className="nav-link">
+                                    <i className="nav-icon fas fa-edit" />
+                                    <p>Add Role</p>
+                                </NavLink>
+                            </li>
 
 
 
@@ -100,12 +109,17 @@ export default function SideBar() {
                                 </NavLink>
                             </li>
 
+
+
                             <li className="nav-item">
                                 <NavLink to='/loanPending' className="nav-link">
                                     <i className="nav-icon fas fa-address-book" />
                                     <p>Pending Loans</p>
                                 </NavLink>
                             </li>
+
+
+
 
                             <li className="nav-item">
                                 <NavLink to='/receipt' className="nav-link">

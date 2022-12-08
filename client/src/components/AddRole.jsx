@@ -51,16 +51,17 @@ const AddRole = () => {
         setRole({ ...role, [e.target.name]: e.target.value })
     }
 
-    const handleChange = () => {
+    const handleChange = (rolez) => {
 
         console.log('The checkbox was toggled');
+        console.log(rolez)
 
     };
 
     const addRoleDetails = async () => {
         await addRole(role);
         console.log("hi simple")
-        navigate('/login')
+        navigate('/')
     }
 
 
@@ -121,7 +122,7 @@ const AddRole = () => {
                                 {/* /.card */}
                                 <div className="card card-info">
                                     <div className="card-header">
-                                        <h3 className="card-title">Grant Access</h3>
+                                        <h3 className="card-title">Grant Access (backend not set)</h3>
                                         <div className="card-tools">
                                             <button type="button" className="btn btn-tool" data-card-widget="collapse" title="Collapse">
                                                 <i className="fas fa-minus" />
@@ -139,26 +140,12 @@ const AddRole = () => {
                                             </thead>
 
                                             <tbody>
-                                                {/* {
-                                                users.map(user => (
-                                                    <li className="nav-item">
-                                                        <NavLink to={'/' + user.role} className="nav-link">
-                                                            <i className="nav-icon fas fa-user-tie" />
-                                                            <p>{user.role}</p>
-                                                        </NavLink>
-                                                    </li>
-                                                ))
-                                            } */}
+
                                                 {
                                                     rolesList.map(r => (
                                                         <tr>
                                                             <td>{r.role}</td>
-                                                            {/* <tr className="text-right py-0 align-middle">
-                                                                <div className="btn-group btn-group-sm">
-                                                                    <a href="#" className="btn btn-info"><i className="fas fa-eye" /></a>
-                                                                    <a href="#" className="btn btn-danger"><i className="fas fa-trash" /></a>
-                                                                </div>
-                                                            </tr> */}
+
                                                             <td>
                                                                 <div className="check-primary">
                                                                     <input type="checkbox" id="check3" onChange={handleChange} />
@@ -170,16 +157,7 @@ const AddRole = () => {
                                                         </tr>
                                                     ))
                                                 }
-                                                {/* <tr>
-                                                    <td>Functional-requirements.docx</td>
-                                                    <td>49.8005 kb</td>
-                                                    <td className="text-right py-0 align-middle">
-                                                        <div className="btn-group btn-group-sm">
-                                                            <a href="#" className="btn btn-info"><i className="fas fa-eye" /></a>
-                                                            <a href="#" className="btn btn-danger"><i className="fas fa-trash" /></a>
-                                                        </div>
-                                                    </td>
-                                                </tr> */}
+
 
                                             </tbody>
                                         </table>

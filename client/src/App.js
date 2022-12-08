@@ -1,6 +1,6 @@
 
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Router, useLocation, Navigate } from 'react-router-dom'
 
 import Dashboard from './components/Dashboard';
 import AddLoan from './components/AddLoan';
@@ -20,9 +20,20 @@ import Receipt from './components/Receipt';
 import LoanPending from './components/LoanPending';
 import ReceiptPending from './components/ReceiptPending';
 import ProtectedRoutes from './components/ProtectedRoutes';
+import { useEffect, useState } from 'react';
 
 
 function App() {
+
+  const [user, setUser] = useState('')
+  // const location = useLocation()
+  // const navigate = useNavigate()
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")))
+    console.log(user.role)
+
+  }, []);
+
   return (
     <div className="wrapper">
       <BrowserRouter>
@@ -30,21 +41,35 @@ function App() {
           <Route element={<ProtectedRoutes />} >
             <Route path='/' element={<Dashboard />} />
             <Route path='/addLoan/:id' element={<AddLoan />} />
-            <Route path='/loans' element={<Loans />} />
-            <Route path='/loanPending' element={<LoanPending />} />
-
+            <Route path='/addUser' element={<AddUserInfo />} />
+            <Route path='/addRole' element={<AddRole />} />
             <Route path='/addReceipt/:id' element={<AddReceipt />} />
+
+            <Route path='/editUser/:id' element={<EditUser />} />
+            <Route path='/editRole/:id' element={<EditRole />} />
+
+            <Route path='/loans' element={<Loans />} />
+            <Route path='/roles' element={<Roles />} />
             <Route path='/receipt' element={<Receipt />} />
+            {/* <>
+
+              {
+                user.role === 'admin' || user.role === 'accountant' ? <Route path='/loanPending' element={<LoanPending />} /> : <Route path='/' element={<Dashboard />} />
+              }
+            </>
+
+            <>
+
+              {
+                user.role === 'admin' || user.role === 'agent' ? <Route path='/receiptPending' element={<ReceiptPending />} /> : <Route path='/' element={<Dashboard />} />
+              }
+            </> */}
+
+            <Route path='/loanPending' element={<LoanPending />} />
             <Route path='/receiptPending' element={<ReceiptPending />} />
 
             <Route path='/login' element={<AddLogin />} />
             <Route path='/:id' element={<Users />} />
-            <Route path='/editUser/:id' element={<EditUser />} />
-
-            <Route path='/addUser' element={<AddUserInfo />} />
-            <Route path='/addRole' element={<AddRole />} />
-            <Route path='/roles' element={<Roles />} />
-            <Route path='/editRole/:id' element={<EditRole />} />
 
             <Route path='/assignedUsers/:id' element={<AssignedUser />} />
             <Route path='/assigning/:id' element={<Assigning />} />

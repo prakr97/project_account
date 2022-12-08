@@ -6,12 +6,12 @@ const { Schema } = mongoose;
 const userSchema = mongoose.Schema({
     name: {
         type: String,
-        // required: true,
+        required: true,
     },
     username: {
         type: String,
-        // unique: true,
-        // required: true
+        unique: true,
+        required: true
     },
     password: {
         type: String,
@@ -19,15 +19,13 @@ const userSchema = mongoose.Schema({
     },
     role: {
         type: String,
-        // required: true
+        required: true
     },
     assignedUser: [{
         type: Schema.Types.ObjectId,
         ref: 'alluser'
     }],
-    // assignTo: {
-    //     type: String,
-    // },
+
     status: {
         type: Boolean
     },
@@ -40,9 +38,11 @@ const userSchema = mongoose.Schema({
 const roleSchema = mongoose.Schema({
     role: {
         type: String,
+        unique: true,
+        required: true
     },
     accessTo: [{
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: 'role'
     }],
 })

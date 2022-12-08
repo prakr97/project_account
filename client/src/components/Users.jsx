@@ -41,7 +41,7 @@ const Users = () => {
     return (
         <>
             <Header />
-            <SideBar />
+            <SideBar component={id} />
 
             <div className="hold-transition sidebar-mini">
                 {/* Site wrapper */}
@@ -102,14 +102,12 @@ const Users = () => {
 
                                                                         {superUser.id === 'customer' &&
 
-                                                                            <Link to={`/addLoan/${user.username}`} className=" row mx-0 fa-solid fa-user-pen text-success">Loan</Link>
-
-
+                                                                            <Link to={`/addLoan/${user.username}`} className="row mx-0 fa-solid fa-user-pen text-success">Loan</Link>
                                                                         }
 
                                                                         {superUser.id === 'customer' &&
 
-                                                                            <Link to={`/addReceipt/${user.username}`} className="mx-0 fa-solid fa-user-pen text-info">Receipt</Link>
+                                                                            <Link to={`/addReceipt/${user.username}`} className="fa-solid fa-user-pen mx-0 text-info">Receipt</Link>
                                                                         }
 
 

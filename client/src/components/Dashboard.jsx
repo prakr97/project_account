@@ -4,13 +4,13 @@ import Body from './DashboardComponent/Body'
 import Header from './DashboardComponent/Header'
 import SideBar from './DashboardComponent/SideBar'
 
-import authHeader from '../service/api'
+// import authHeader from '../service/api'
 import { useNavigate } from 'react-router-dom'
 
 
 function Dashboard() {
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   // useEffect(() => {
   //   authentication()
@@ -26,7 +26,6 @@ function Dashboard() {
 
   return (
     <>
-
 
       <Header />
       <SideBar />

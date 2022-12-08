@@ -76,16 +76,7 @@ export const loginUser = async (data) => {
 
 }
 
-// export default function authHeader() {
-//     const user = JSON.parse(localStorage.getItem("user"));
 
-//     if (user && user.accessToken) {
-//       // return { Authorization: 'Bearer ' + user.accessToken };
-//       return { "x-auth-token": user.accessToken };
-//     } else {
-//       return {};
-//     }
-//   }
 
 export default function authHeader() {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -98,7 +89,9 @@ export default function authHeader() {
     }
 }
 
-
+export const logout = () => {
+    localStorage.removeItem("user");
+};
 
 export const getAllRoles = async () => {
     try {
@@ -130,7 +123,7 @@ export const getUsers = async (user) => {
 export const allroleaccess = async (roles) => {
     try {
         console.log(roles)
-        return await axios.post(`${URL}/${roles}`, { roles })
+        return await axios.post(`${URL}/rolesaccess`, { roles })
     } catch (error) {
         console.log('error while calling get rolesaccess api', error)
     }

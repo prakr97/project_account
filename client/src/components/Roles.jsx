@@ -78,18 +78,18 @@ const Roles = () => {
 
                                                         <td className="project-actions text-right">
 
-                                                            <Link to={`/editRole/${user.role}`} className="btn btn-info btn-sm mx-1" >
+                                                            {/* <Link to={`/editRole/${user.role}`} className="btn btn-info btn-sm mx-1" >
                                                                 <i className="fas fa-pencil-alt mx-1">
                                                                 </i>
                                                                 Edit
-                                                            </Link>
-                                                            {/* <Button variant='contained' style={{marginRight: 10}} component={Link} to={`/edit/${user._id}`}>Edit</Button> */}
+                                                            </Link> */}
 
-                                                            <a className="btn btn-danger btn-sm" href="#">
+
+                                                            {/* <a className="btn btn-danger btn-sm" href="#">
                                                                 <i className="fas fa-trash mx-1">
                                                                 </i>
                                                                 Delete
-                                                            </a>
+                                                            </a> */}
                                                         </td>
                                                     </tr>
                                                 ))
